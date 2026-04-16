@@ -113,6 +113,27 @@
     .icon-circle.sql { background: #fff0f0; }
     .icon-circle.pg { background: #e8f0f8; }
     .icon-circle.dab { background: #ddf4ff; }
+    /* Download button dropdown */
+    .dl-wrap { position: relative; display: inline-block; margin-top: 24px; }
+    .dl-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--brand-copilot); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .dl-btn:hover { background: var(--brand-copilot-dark); }
+    .dl-btn svg { fill: #fff; }
+    .dl-arrow { margin-left: 4px; border-left: 1px solid rgba(255,255,255,0.3); padding-left: 8px; }
+    .dl-menu { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; background: #fff; border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 200; min-width: 200px; overflow: hidden; }
+    .dl-menu.open { display: block; }
+    .dl-menu button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 14px; color: #24292f; text-align: left; transition: background 0.15s; }
+    .dl-menu button:hover { background: #f6f8fa; }
+    .dl-menu button span.dl-icon { font-size: 18px; width: 24px; text-align: center; }
+    .dl-menu button .dl-label strong { display: block; font-weight: 600; }
+    .dl-menu button .dl-label small { color: #656d76; font-size: 12px; }
+    @media print {
+      .top-nav, .dl-wrap, .footer { display: none !important; }
+      .hero { background: #0d1117 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section-alt { background: #f6f8fa !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { font-size: 11px; }
+      .section { padding: 24px 0; }
+      .feature-card, .mode-card, .scenario-card { break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
@@ -150,6 +171,22 @@
     <span class="Label" style="background:#ddf4ff;color:#0078d4;">@dab Agent</span>
     <span class="Label">Schema Designer</span>
     <span class="Label">Query Optimizer</span>
+  </div>
+  <div class="dl-wrap">
+    <button class="dl-btn" onclick="toggleDlMenu()">
+      <svg height="16" width="16" viewBox="0 0 16 16"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14ZM7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06Z"/></svg>
+      Download Guide <span class="dl-arrow">&#x25BE;</span>
+    </button>
+    <div class="dl-menu" id="dlMenu">
+      <button onclick="downloadPdf()">
+        <span class="dl-icon">&#x1F4C4;</span>
+        <span class="dl-label"><strong>Save as PDF</strong><small>Print-optimized layout</small></span>
+      </button>
+      <button onclick="downloadHtml()">
+        <span class="dl-icon">&#x1F310;</span>
+        <span class="dl-label"><strong>Save as HTML</strong><small>Standalone offline file</small></span>
+      </button>
+    </div>
   </div>
 </div></section>
 
@@ -1125,6 +1162,33 @@ SELECT COUNT(t.id) FILTER (WHERE t.status = 'done')::int AS done_count FROM task
   </div>
 </div>
 </footer>
+
+<script>
+  function toggleDlMenu() {
+    document.getElementById('dlMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dl-wrap')) {
+      document.getElementById('dlMenu').classList.remove('open');
+    }
+  });
+  function downloadPdf() {
+    document.getElementById('dlMenu').classList.remove('open');
+    window.print();
+  }
+  function downloadHtml() {
+    document.getElementById('dlMenu').classList.remove('open');
+    var html = document.documentElement.outerHTML;
+    var blob = new Blob(['<!DOCTYPE html>' + html], { type: 'text/html' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'GitHub_Copilot_Database_Engineer_Guide.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }
+</script>
 
 </body>
 </html>
