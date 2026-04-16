@@ -125,6 +125,7 @@
   <a href="#mssql-features">MSSQL Features</a>
   <a href="#pgsql-features">PostgreSQL</a>
   <a href="#data-api-builder">Data API Builder</a>
+  <a href="#dab-agent">DAB Agent</a>
   <a href="#schema-designer">Schema Designer</a>
   <a href="#query-optimization">Query Optimization</a>
   <a href="#code-generation">Code Generation</a>
@@ -146,6 +147,7 @@
     <span class="Label" style="background:#ddf4ff;color:#0078d4;">Data API Builder</span>
     <span class="Label" style="background:#dafbe1;color:#1a7f37;">MCP Servers</span>
     <span class="Label">Agent Mode</span>
+    <span class="Label" style="background:#ddf4ff;color:#0078d4;">@dab Agent</span>
     <span class="Label">Schema Designer</span>
     <span class="Label">Query Optimizer</span>
   </div>
@@ -157,9 +159,9 @@
 <section id="toolkit" class="section">
 <div class="container-xl px-3">
   <h2 class="section-title">Your AI Database Toolkit</h2>
-  <p class="section-lead">Four VS Code extensions and their built-in MCP servers form the foundation. Install these before anything else.</p>
+  <p class="section-lead">Five VS Code extensions and their built-in MCP servers form the foundation. Install these before anything else.</p>
 
-  <div class="grid-4" style="margin-bottom:32px;">
+  <div class="grid-3" style="margin-bottom:16px;">
     <div class="feature-card">
       <h3>
         <svg height="16" viewBox="0 0 16 16" width="16" fill="#6e40c9" style="vertical-align:middle;margin-right:4px"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
@@ -187,6 +189,21 @@
       <p>Generate REST, GraphQL, and MCP endpoints from your database tables with a visual UI or natural language. Deploy locally via Docker.</p>
       <span class="tool-badge dab">Built into MSSQL</span>
       <span class="tool-badge mcp">REST / GraphQL / MCP</span>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:32px;">
+    <div class="feature-card dab-card">
+      <h3>&#x1F916; DAB Agent (<code>@dab</code>)</h3>
+      <p>GitHub Copilot chat participant for Data API Builder. Use <code>@dab</code> in Copilot Chat for natural language DAB configuration, entity management, MCP setup, and troubleshooting. Includes a bundled DAB Developer coding agent.</p>
+      <span class="tool-badge dab">jerry-nixon.agent-data-api-builder</span>
+      <span class="tool-badge copilot">@dab Chat</span>
+      <span class="tool-badge mcp">Coding Agent</span>
+    </div>
+    <div class="feature-card dab-card">
+      <h3>&#x1F4E6; DAB Omnibus</h3>
+      <p>All Data API Builder extensions bundled into a single package: init, add, start, validate, health, visualize, and POCO generation. One install to get everything.</p>
+      <span class="tool-badge dab">jerry-nixon.omnibus-data-api-builder</span>
+      <span class="tool-badge dab">All-in-One</span>
     </div>
   </div>
 
@@ -448,6 +465,115 @@
   <div class="callout-blue callout">
     <p><strong>MCP Endpoint:</strong> When you enable the MCP API type, Data API builder generates a Model Context Protocol server. Selecting "Add to VS Code" writes the configuration to <code>.vscode/mcp.json</code>, making your database accessible to Copilot and other AI tools through Data API builder.</p>
   </div>
+</div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SECTION 5b: DAB AGENT -->
+<!-- ============================================================== -->
+<section id="dab-agent" class="section section-alt">
+<div class="container-xl px-3">
+  <h2 class="section-title">DAB Agent &amp; Developer Agent</h2>
+  <p class="section-lead">A dedicated <code>@dab</code> chat participant and bundled coding agent that turns natural language into Data API Builder configurations. Manage entities, relationships, MCP endpoints, and troubleshoot issues without touching JSON.</p>
+
+  <div class="grid-2" style="margin-bottom:24px;">
+    <div>
+      <h3 class="h4 mb-3"><code>@dab</code> Chat Participant</h3>
+      <p style="font-size:14px;color:#656d76;line-height:1.6;margin-bottom:16px;">Type <code>@dab</code> in GitHub Copilot Chat for expert DAB assistance. Supports natural language intent detection, context-aware routing, and LLM-powered fallback for complex questions.</p>
+      <div class="prompt-block">
+        <div class="prompt-label">Initialize</div>
+        <code>@dab Initialize a new DAB configuration</code>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-label">Add Entity</div>
+        <code>@dab Add the Products table with read permissions</code>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-label">Relationships</div>
+        <code>@dab Set up a relationship where Author has many Books</code>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-label">Enable MCP</div>
+        <code>@dab Enable MCP and expose my stored procedures as AI tools</code>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-label">Troubleshoot</div>
+        <code>@dab I'm getting a connection error, help me fix it</code>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-label">Security Guidance</div>
+        <code>@dab How do I implement row-level security?</code>
+      </div>
+    </div>
+    <div>
+      <h3 class="h4 mb-3">Bundled DAB Developer Agent</h3>
+      <p style="font-size:14px;color:#656d76;line-height:1.6;margin-bottom:16px;">The extension automatically includes a coding agent with specialized DAB commands &mdash; no setup required. Available immediately after installation.</p>
+      <table class="gov-table">
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>dab-init</code></td><td>Initialize new DAB configurations with auto-detected connection strings</td></tr>
+          <tr><td><code>dab-add</code></td><td>Add database objects (tables, views, stored procedures) as API entities</td></tr>
+          <tr><td><code>dab-update</code></td><td>Modify entities, relationships, column mappings</td></tr>
+          <tr><td><code>dab-configure</code></td><td>Change runtime settings</td></tr>
+          <tr><td><code>dab-validate</code></td><td>Validate configuration files</td></tr>
+          <tr><td><code>dab-start</code></td><td>Start the DAB engine</td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="margin-top:20px;font-size:15px;">13 Specialized Agent Skills</h4>
+      <p style="font-size:14px;color:#656d76;line-height:1.6;margin-bottom:12px;">The extension bundles skills for advanced workflows:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span class="tool-badge dab">Azure DAB Deploy</span>
+        <span class="tool-badge dab">Azure MCP Inspector</span>
+        <span class="tool-badge dab">Azure SQL Commander</span>
+        <span class="tool-badge dab">.NET Aspire DAB</span>
+        <span class="tool-badge dab">DAB Auth</span>
+        <span class="tool-badge dab">DAB CLI</span>
+        <span class="tool-badge dab">DAB Config</span>
+        <span class="tool-badge dab">DAB MCP</span>
+        <span class="tool-badge dab">DAB Demo</span>
+        <span class="tool-badge dab">Docker DAB</span>
+        <span class="tool-badge dab">SQL Projects</span>
+      </div>
+
+      <h4 style="margin-top:20px;font-size:15px;">MCP Integration</h4>
+      <div class="code-block"><code><span class="comment">// After enabling MCP, configure your AI client:</span>
+{
+  <span class="string">"mcpServers"</span>: {
+    <span class="string">"my-database"</span>: {
+      <span class="string">"url"</span>: <span class="string">"http://localhost:5000/mcp"</span>
+    }
+  }
+}
+
+<span class="comment"># Expose stored procedures as AI tools:</span>
+dab add GetBookById --source dbo.usp_GetBookById \
+  --source.type stored-procedure \
+  --permissions <span class="string">"anonymous:execute"</span>
+dab update GetBookById --mcp.custom-tool <span class="keyword">true</span></code></div>
+    </div>
+  </div>
+
+  <div class="callout-blue callout">
+    <p><strong>Quick Start:</strong> Install the DAB CLI (<code>dotnet tool install -g Microsoft.DataApiBuilder</code>), create a <code>.env</code> file with your connection string, then type <code>@dab Initialize DAB</code> in Copilot Chat. The agent handles everything from configuration to starting the server.</p>
+  </div>
+
+  <h3 class="h4 mt-4 mb-3">DAB Extension Suite</h3>
+  <p style="font-size:14px;color:#656d76;margin-bottom:12px;">Individual extensions for granular control, or install the Omnibus for everything at once:</p>
+  <table class="gov-table">
+    <thead><tr><th>Extension</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>DAB Omnibus</strong></td><td>All extensions bundled in one package</td></tr>
+      <tr><td>DAB Agent (<code>@dab</code>)</td><td>Copilot chat participant + coding agent</td></tr>
+      <tr><td>DAB Init</td><td>Initialize configurations</td></tr>
+      <tr><td>DAB Add</td><td>Add entities to configurations</td></tr>
+      <tr><td>DAB Start</td><td>Start/stop the DAB engine</td></tr>
+      <tr><td>DAB Validate</td><td>Validate configuration files</td></tr>
+      <tr><td>DAB Health</td><td>Health checks and diagnostics</td></tr>
+      <tr><td>DAB Visualize</td><td>Visualize entity configurations</td></tr>
+      <tr><td>DAB POCO</td><td>Generate C# model classes</td></tr>
+    </tbody>
+  </table>
 </div>
 </section>
 
@@ -871,6 +997,16 @@ SELECT COUNT(t.id) FILTER (WHERE t.status = 'done')::int AS done_count FROM task
         <td>Data API Builder</td>
       </tr>
       <tr>
+        <td><strong>DAB Config</strong></td>
+        <td><code>@dab Add the Products table with read permissions and enable MCP</code></td>
+        <td>DAB Agent</td>
+      </tr>
+      <tr>
+        <td><strong>DAB Relationships</strong></td>
+        <td><code>@dab Set up a relationship where Author has many Books</code></td>
+        <td>DAB Agent</td>
+      </tr>
+      <tr>
         <td><strong>Design Schema</strong></td>
         <td><code>Build a task management schema with users, projects, tasks, and comments with proper relationships</code></td>
         <td>Schema Designer</td>
@@ -943,6 +1079,11 @@ SELECT COUNT(t.id) FILTER (WHERE t.status = 'done')::int AS done_count FROM task
       <a class="ref-link" href="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-schema-compare?view=sql-server-ver17" target="_blank">Schema Compare</a>
       <a class="ref-link" href="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-data-tier-application?view=sql-server-ver17" target="_blank">DACPAC &amp; BACPAC Import/Export</a>
       <a class="ref-link" href="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-local-container?view=sql-server-ver17" target="_blank">Local SQL Server Container</a>
+
+      <h3 class="h4 mt-4 mb-3">DAB Agent &amp; Extensions</h3>
+      <a class="ref-link" href="https://marketplace.visualstudio.com/items?itemName=jerry-nixon.agent-data-api-builder" target="_blank">DAB Agent Extension (Marketplace)</a>
+      <a class="ref-link" href="https://marketplace.visualstudio.com/items?itemName=jerry-nixon.omnibus-data-api-builder" target="_blank">DAB Omnibus Extension (Marketplace)</a>
+      <a class="ref-link" href="https://github.com/JerryNixon/data-api-builder-vscode-ext" target="_blank">DAB Extension Suite (GitHub)</a>
 
       <h3 class="h4 mt-4 mb-3">Copilot Skills</h3>
       <a class="ref-link" href="https://awesome-copilot.github.com/skills/#file=skills%2Fsql-optimization%2FSKILL.md" target="_blank">SQL Optimization Skill</a>
