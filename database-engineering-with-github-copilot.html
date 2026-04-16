@@ -173,16 +173,16 @@
     <span class="Label">Query Optimizer</span>
   </div>
   <div class="dl-wrap">
-    <button class="dl-btn" onclick="toggleDlMenu()">
+    <button class="dl-btn">
       <svg height="16" width="16" viewBox="0 0 16 16"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14ZM7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06Z"/></svg>
       Download Guide <span class="dl-arrow">&#x25BE;</span>
     </button>
     <div class="dl-menu" id="dlMenu">
-      <button onclick="downloadPdf()">
+      <button id="btnPdf">
         <span class="dl-icon">&#x1F4C4;</span>
         <span class="dl-label"><strong>Save as PDF</strong><small>Print-optimized layout</small></span>
       </button>
-      <button onclick="downloadHtml()">
+      <button id="btnHtml">
         <span class="dl-icon">&#x1F310;</span>
         <span class="dl-label"><strong>Save as HTML</strong><small>Standalone offline file</small></span>
       </button>
@@ -1164,30 +1164,46 @@ SELECT COUNT(t.id) FILTER (WHERE t.status = 'done')::int AS done_count FROM task
 </footer>
 
 <script>
-  function toggleDlMenu() {
-    document.getElementById('dlMenu').classList.toggle('open');
-  }
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.dl-wrap')) {
-      document.getElementById('dlMenu').classList.remove('open');
-    }
-  });
-  function downloadPdf() {
-    document.getElementById('dlMenu').classList.remove('open');
-    window.print();
-  }
-  function downloadHtml() {
-    document.getElementById('dlMenu').classList.remove('open');
-    var html = document.documentElement.outerHTML;
-    var blob = new Blob(['<!DOCTYPE html>' + html], { type: 'text/html' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'GitHub_Copilot_Database_Engineer_Guide.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-  }
+  (function() {
+    var dlBtn = document.querySelector('.dl-btn');
+    var dlMenu = document.getElementById('dlMenu');
+
+    dlBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dlMenu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dl-wrap')) {
+        dlMenu.classList.remove('open');
+      }
+    });
+
+    document.getElementById('btnPdf').addEventListener('click', function(e) {
+      e.stopPropagation();
+      dlMenu.classList.remove('open');
+      window.print();
+    });
+
+    document.getElementById('btnHtml').addEventListener('click', function(e) {
+      e.stopPropagation();
+      dlMenu.classList.remove('open');
+      var clone = document.documentElement.cloneNode(true);
+      var scripts = clone.querySelectorAll('script');
+      scripts.forEach(function(s) { s.remove(); });
+      var menu = clone.querySelector('.dl-wrap');
+      if (menu) menu.remove();
+      var html = clone.outerHTML;
+      var blob = new Blob(['<!DOCTYPE html>' + html], { type: 'text/html' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'GitHub_Copilot_Database_Engineer_Guide.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    });
+  })();
 </script>
 
 </body>
